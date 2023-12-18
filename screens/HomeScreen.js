@@ -4,11 +4,12 @@ import tw from "twrnc";
 import NavOptions from "../components/NavOptions";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import PlaceAutocomplete from "../components/PlaceAutocomplete";
-import {GEOAPIFY_PLACES_AUTOCOMPLETE_API_KEY} from "@env"
-// import { GeoapifyContext, GeoapifyGeocoderAutocomplete } from "@geoapify/react-geocoder-autocomplete";
-// import "@geoapify/geocoder-autocomplete/styles/minimal.css";
+import { GEOAPIFY_PLACES_AUTOCOMPLETE_API_KEY } from "@env";
+import { setOrigin, setDestination } from "../slices/navSlice";
+import { useDispatch } from "react-redux";
 
 const HomeScreen = () => {
+  const dispatch = useDispatch();
   return (
     <SafeAreaView style={tw`bg-white h-full`}>
       <View style={tw`pl-5 pt-15`}>
@@ -18,20 +19,26 @@ const HomeScreen = () => {
             uri: "https://links.papareact.com/gzs",
           }}
         />
-        <GooglePlacesAutocomplete
-          styles={fromInputBoxStyles}
-          placeholder="Where From?"
-
-        />
         <PlaceAutocomplete
           placeHolder="Where From?"
           styles={fromInputBoxStyles}
-          onSelect={()=>{const x=10;}}
-          query={{apiKey:GEOAPIFY_PLACES_AUTOCOMPLETE_API_KEY}}
+          onSelect={(place) => {
+            dispatch(
+              setOrigin({
+                location: {
+                  lon: place.properties.lon,
+                  lat: place.properties.lat,
+                },
+                place: place.properties.formatted,
+              })
+            );
+            dispatch(setDestination(null));
+          }}
+          query={{
+            apiKey: GEOAPIFY_PLACES_AUTOCOMPLETE_API_KEY,
+            language: "en",
+          }}
         />
-        {/* <GeoapifyContext apiKey={GEOAPIFY_PLACES_AUTOCOMPLETE_API_KEY}>
-          <GeoapifyGeocoderAutocomplete placeholder="Where From?" lang="en" />
-        </GeoapifyContext> */}
         <NavOptions />
       </View>
     </SafeAreaView>

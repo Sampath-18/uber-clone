@@ -24,7 +24,7 @@ const PlaceAutocomplete = ({
     setInput(text);
     if (text.length > 1) {
       try {
-        console.log("query params: ", { ...query, text: text });
+        // console.log("query params: ", { ...query, text: text });
         const response = await axios.get(
           "https://api.geoapify.com/v1/geocode/autocomplete",
           { params: { ...query, text: text } }
@@ -42,7 +42,7 @@ const PlaceAutocomplete = ({
   };
 
   const handleSelectPlace = (place) => {
-    setInput(place.properties.address_line1);
+    setInput(place.properties.formatted);
     setSuggestions([]);
     onSelect(place);
   };

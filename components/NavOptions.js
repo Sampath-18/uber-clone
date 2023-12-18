@@ -3,6 +3,8 @@ import React from "react";
 import tw from "tailwind-react-native-classnames";
 import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
+import { selectOrigin } from "../slices/navSlice";
 
 const data = [
   {
@@ -20,36 +22,42 @@ const data = [
 ];
 
 const NavOptions = () => {
-
   const navigation = useNavigation();
 
+  const origin = useSelector(selectOrigin);
+
   return (
-    <View>
-      <FlatList
-        data={data}
-        horizontal
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => navigation.navigate(item.screen)} style={tw`p-4 pl-5 pb-8 pt-6 bg-gray-200 m-4 ml-2`}>
-            <View>
-              <Image
-                source={{
-                  uri: item.image,
-                }}
-                style={{ width: 100, height: 100, resizeMode: "contain" }}
-              />
-              <Text style={tw`mt-2 text-lg font-semibold`}>{item.title}</Text>
-              <Icon
-                type="antdesign"
-                name="arrowright"
-                color="white"
-                style={tw`p-2 bg-black rounded-full w-10 mt-4`}
-              />
-            </View>
-          </TouchableOpacity>
-        )}
-      />
-    </View>
+    <FlatList
+      data={data}
+      horizontal
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => (
+        <TouchableOpacity
+          onPress={() => {
+            if (origin) {
+              navigation.navigate(item.screen);
+            }
+          }}
+          style={tw`p-4 pl-5 pb-8 pt-6 bg-gray-200 m-4 ml-2`}
+        >
+          <View style={tw`${!origin && "opacity-20"}`}>
+            <Image
+              source={{
+                uri: item.image,
+              }}
+              style={{ width: 100, height: 100, resizeMode: "contain" }}
+            />
+            <Text style={tw`mt-2 text-lg font-semibold`}>{item.title}</Text>
+            <Icon
+              type="antdesign"
+              name="arrowright"
+              color="white"
+              style={tw`p-2 bg-black rounded-full w-10 mt-4`}
+            />
+          </View>
+        </TouchableOpacity>
+      )}
+    />
   );
 };
 
