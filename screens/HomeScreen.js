@@ -2,7 +2,7 @@ import { Image, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import tw from "twrnc";
 import NavOptions from "../components/NavOptions";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+// import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import PlaceAutocomplete from "../components/PlaceAutocomplete";
 import { GEOAPIFY_PLACES_AUTOCOMPLETE_API_KEY } from "@env";
 import { setOrigin, setDestination } from "../slices/navSlice";

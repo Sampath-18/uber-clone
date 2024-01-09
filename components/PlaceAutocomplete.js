@@ -54,13 +54,15 @@ const PlaceAutocomplete = ({
   // }, [input])
 
   return (
-    <View style={{ ...defaultStyles.container, ...styles.container }}>
+    <View style={{ ...defaultStyles.container, ...styles?.container }}>
       <View style={defaultStyles.textInputContainer}>
         <TextInput
-          style={{ ...styles.textInput, ...defaultStyles.textInput }}
+          style={{ ...defaultStyles.textInput, ...styles?.textInput }}
           placeholder={placeHolder}
           value={input}
-          onChangeText={handleTextInputChange}
+          onChangeText={handleTextInputChange}    
+          numberOfLines={1}  
+          ellipsizeMode="head"    
           // onChangeText={(newText) => setInput(newText)}
         />
         {input.length > 0 && (
@@ -128,6 +130,10 @@ const defaultStyles = StyleSheet.create({
     fontSize: 18,
     paddingLeft: 10,
     flex: 1,
+    overflow: 'hidden',
+    // whiteSpace: 'nowrap',
+    // textOverflow: 'ellipsis'
+    // flexWrap: "wrap",
   },
   crossIcon: {
     backgroundColor: "white",
